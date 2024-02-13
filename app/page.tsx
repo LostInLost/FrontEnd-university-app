@@ -1,8 +1,10 @@
-import type { NextPage } from "next";
-import { Content } from "@/components/home/content";
+import React from "react";
+import FormLogin from "./form-login";
 
-const Home: NextPage = () => {
-  return <Content />;
-};
-
-export default Home;
+export default function Page() {
+  return (
+    <section className="flex h-screen justify-center items-center">
+      <FormLogin />
+    </section>
+  );
+}
