@@ -12,13 +12,13 @@ import { SettingsIcon } from "@/components/icons/sidebar/settings-icon";
 import { TableWrapper } from "@/components/table/table";
 import { AddUser } from "./add-user";
 
-export const Accounts = () => {
+export const Students = () => {
   return (
     <div className="my-14 lg:px-6 max-w-[95rem] mx-auto w-full flex flex-col gap-4">
       <ul className="flex">
         <li className="flex gap-2">
           <HouseIcon />
-          <Link href={"/"}>
+          <Link href={"/dashboard"}>
             <span>Home</span>
           </Link>
           <span> / </span>{" "}
@@ -26,7 +26,7 @@ export const Accounts = () => {
 
         <li className="flex gap-2">
           <UsersIcon />
-          <span>Users</span>
+          <span>Students</span>
           <span> / </span>{" "}
         </li>
         <li className="flex gap-2">

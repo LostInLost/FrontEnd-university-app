@@ -1,14 +1,15 @@
-import React from "react";
-import { useLockedBody } from "../hooks/useBodyLock";
-import { NavbarWrapper } from "../navbar/navbar";
-import { SidebarWrapper } from "../sidebar/sidebar";
-import { SidebarContext } from "./layout-context";
+import React from 'react';
+import { useLockedBody } from '../hooks/useBodyLock';
+import { NavbarWrapper } from '../navbar/navbar';
+import { SidebarWrapper } from '../sidebar/sidebar';
+import { SidebarContext } from './layout-context';
 
 interface Props {
   children: React.ReactNode;
+  session: any;
 }
 
-export const Layout = ({ children }: Props) => {
+export const Layout = ({ children, session }: Props) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [_, setLocked] = useLockedBody(false);
   const handleToggleSidebar = () => {
@@ -25,7 +26,7 @@ export const Layout = ({ children }: Props) => {
     >
       <section className="flex">
         <SidebarWrapper />
-        <NavbarWrapper>{children}</NavbarWrapper>
+        <NavbarWrapper session={session}>{children}</NavbarWrapper>
       </section>
     </SidebarContext.Provider>
   );

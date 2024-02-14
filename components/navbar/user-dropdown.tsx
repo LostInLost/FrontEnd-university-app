@@ -1,46 +1,35 @@
-import {
-  Avatar,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Navbar,
-  NavbarItem,
-} from "@nextui-org/react";
-import React from "react";
-import { DarkModeSwitch } from "./darkmodeswitch";
+import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarItem } from '@nextui-org/react';
+import React from 'react';
+import { DarkModeSwitch } from './darkmodeswitch';
+import defaultAvatar from '@/public/defaultAvatar.png';
+import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
-export const UserDropdown = () => {
+export const UserDropdown = ({ session }: { session: any }) => {
+  const router = useRouter();
+  const handleLogout = async () => {
+    await signOut({
+      redirect: false,
+    });
+
+    return router.push('/');
+  };
   return (
     <Dropdown>
       <NavbarItem>
         <DropdownTrigger>
-          <Avatar
-            as="button"
-            color="secondary"
-            size="md"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-          />
+          <Avatar as="button" color="secondary" size="md" src={defaultAvatar.src} isBordered />
         </DropdownTrigger>
       </NavbarItem>
       <DropdownMenu
         aria-label="User menu actions"
-        onAction={(actionKey) => console.log({ actionKey })}
+        // onAction={(actionKey) => console.log({ actionKey })}
       >
-        <DropdownItem
-          key="profile"
-          className="flex flex-col justify-start w-full items-start"
-        >
+        <DropdownItem key="profile" className="flex flex-col justify-start w-full items-start">
           <p>Signed in as</p>
-          <p>zoey@example.com</p>
+          <p>{session?.user?.name}</p>
         </DropdownItem>
-        <DropdownItem key="settings">My Settings</DropdownItem>
-        <DropdownItem key="team_settings">Team Settings</DropdownItem>
-        <DropdownItem key="analytics">Analytics</DropdownItem>
-        <DropdownItem key="system">System</DropdownItem>
-        <DropdownItem key="configurations">Configurations</DropdownItem>
-        <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-        <DropdownItem key="logout" color="danger" className="text-danger ">
+        <DropdownItem key="logout" color="danger" className="text-danger " onClick={handleLogout}>
           Log Out
         </DropdownItem>
         <DropdownItem key="switch">
