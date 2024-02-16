@@ -54,7 +54,7 @@ export default function EditStudent({ session, mutate, student }: City) {
 
   return (
     <>
-      <Tooltip content="Edit user" color="secondary">
+      <Tooltip content="Edit Student" color="secondary">
         <button onClick={onOpen}>
           <EditIcon size={20} fill="#979797" />
         </button>
@@ -64,7 +64,7 @@ export default function EditStudent({ session, mutate, student }: City) {
           {(onClose) => (
             <>
               <form action="" method="post" onSubmit={handleSubmit}>
-                <ModalHeader className="flex flex-col gap-1">Edit City</ModalHeader>
+                <ModalHeader className="flex flex-col gap-1">Edit Student</ModalHeader>
                 <ModalBody>
                   {errMsg && <Chip color="danger">{errMsg}</Chip>}
                   <div className="grid grid-cols-2 gap-3">

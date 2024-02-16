@@ -16,6 +16,7 @@ export default function AddCity({ session, mutate }: { session: any; mutate: any
     await delay(1000);
     const res = await fetch(process.env.NEXT_PUBLIC_URL_API + '/api/admin/dashboard/cities', {
       method: 'POST',
+      credentials: 'include',
       headers: {
         Accept: 'application/json',
         Authorization: session?.user?.token_type + ' ' + session?.user?.token_api,

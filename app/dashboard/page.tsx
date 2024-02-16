@@ -1,17 +1,24 @@
-import { getServerSession } from 'next-auth';
-import React from 'react';
-import { AuthOptions } from '../api/auth/[...nextauth]/AuthOptions';
+import { getServerSession } from "next-auth";
+import React from "react";
+import { AuthOptions } from "../api/auth/[...nextauth]/AuthOptions";
+import Link from "next/link";
+import DashboardCharts from "./dashboard-charts";
 
 export default async function Page() {
   const session = await getServerSession(AuthOptions);
-  const res = await fetch(process.env.NEXT_PUBLIC_URL_API + '/api/admin/dashboard/cities', {
-    method: 'GET',
-    headers: {
-      Authorization: session?.user.token_type + ' ' + session?.user.token_api,
-    },
-    cache: 'no-store',
-  });
-  // console.log(session);
-  const city = await res.json();
-  return <div>{city.cities && city?.cities.map((data: any) => <div>{data.name}</div>)}</div>;
+  return (
+    <div className="my-14 lg:px-6 max-w-[95rem] mx-auto w-full flex flex-col gap-4">
+      <ul className="flex gap-2">
+        <li className="flex ">
+          <Link href={"/dashboard"}>
+            <span>Home</span>
+          </Link>
+        </li>
+      </ul>
+      <h3 className="text-xl font-semibold">
+        Welcome to dashboard, {session?.user.name}.{" "}
+      </h3>
+      <DashboardCharts session={session} />
+    </div>
+  );
 }

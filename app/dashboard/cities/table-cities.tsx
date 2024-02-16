@@ -1,8 +1,5 @@
 'use client';
 import DataTable from '@/components/Generator/DataTableNextUI';
-import { DeleteIcon } from '@/components/icons/table/delete-icon';
-import { EditIcon } from '@/components/icons/table/edit-icon';
-import { EyeIcon } from '@/components/icons/table/eye-icon';
 import { fetcher } from '@/lib/Fetcher';
 import { Tooltip } from '@nextui-org/react';
 import React from 'react';

@@ -1,27 +1,32 @@
-'use client';
-import DataTable from '@/components/Generator/DataTableNextUI';
-import { DeleteIcon } from '@/components/icons/table/delete-icon';
-import { EditIcon } from '@/components/icons/table/edit-icon';
-import { EyeIcon } from '@/components/icons/table/eye-icon';
-import { fetcher } from '@/lib/Fetcher';
-import { Tooltip } from '@nextui-org/react';
-import React from 'react';
-import useSWR from 'swr';
-import AddStudent from './students-add';
-import DeleteStudent from './students-delete';
-import EditStudent from './students-edit';
-import DetailStudent from './students-detail';
+"use client";
+import DataTable from "@/components/Generator/DataTableNextUI";
+import { DeleteIcon } from "@/components/icons/table/delete-icon";
+import { EditIcon } from "@/components/icons/table/edit-icon";
+import { EyeIcon } from "@/components/icons/table/eye-icon";
+import { fetcher } from "@/lib/Fetcher";
+import { Tooltip } from "@nextui-org/react";
+import React from "react";
+import useSWR from "swr";
+import AddStudent from "./students-add";
+import DeleteStudent from "./students-delete";
+import EditStudent from "./students-edit";
+import DetailStudent from "./students-detail";
 
 export default function StudentsTable({ session }: { session: any }) {
-  const { data, mutate } = useSWR(['/api/admin/dashboard/students', session?.user], fetcher);
+  const { data, mutate } = useSWR(
+    ["/api/admin/dashboard/students", session?.user],
+    fetcher
+  );
 
-  const cityData = data?.students.map((student: any, i: number) => {
+  const studentData = data?.students.map((student: any, i: number) => {
     return {
       key: i + 1,
       no: i + 1,
       nim: student.nim,
       name: student.name,
-      born_date: student.born_date,
+      born_date: new Date(student.born_date).toLocaleDateString([], {
+        dateStyle: "long",
+      }),
       university: student.university,
       action: (
         <div className="flex items-center gap-4 ">
@@ -32,7 +37,12 @@ export default function StudentsTable({ session }: { session: any }) {
             <EditStudent session={session} mutate={mutate} student={student} />
           </div>
           <div>
-            <DeleteStudent session={session} mutate={mutate} id={student.id} name={student.name} />
+            <DeleteStudent
+              session={session}
+              mutate={mutate}
+              id={student.id}
+              name={student.name}
+            />
           </div>
         </div>
       ),
@@ -40,6 +50,13 @@ export default function StudentsTable({ session }: { session: any }) {
   });
 
   return (
-    <DataTable columns={['NIM', 'Born Date', 'Name', 'University', 'Action']} data={cityData} isSearchable searchFilterColumn={['name', 'university']} isLoading={!data} extraContent={<AddStudent session={session} mutate={mutate} />} />
+    <DataTable
+      columns={["NIM", "Born Date", "Name", "University", "Action"]}
+      data={studentData}
+      isSearchable
+      searchFilterColumn={["Name", "University"]}
+      isLoading={!data}
+      extraContent={<AddStudent session={session} mutate={mutate} />}
+    />
   );
 }
